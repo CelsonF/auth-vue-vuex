@@ -15,6 +15,11 @@
               Gerentes
             </router-link>
           </li>
+          <li class="nav-item">
+            <router-link to="/cadastre-se" class="nav-link">
+              Cadastre-se
+            </router-link>
+          </li>
         </ul>
       </div>
     </nav>
