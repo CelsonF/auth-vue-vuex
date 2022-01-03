@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1 class="my-3">Login</h1>
-    <form>
+    <form @submit.prevent="efetuarLogin">
        <div class="form-group">
           <label for="email">E-mail</label
           ><input type="text" name="email" id="email" class="form-control" v-model="usuario.email"/>
@@ -21,7 +21,8 @@
 </template>
 
 <script>
-export default {
+
+export default {  
  data() {
      return {
          usuario:{
@@ -29,6 +30,19 @@ export default {
              senha:''
          }
      }
+ },
+ methods: {
+   efetuarLogin() {
+      this.$http.post('auth/login',this.usuario)
+     .then(response => {
+       console.log(response)
+       localStorage.setItem('token',response.data.access_token)
+       this.$router.push({name:'gerentes'})
+     })
+     .catch(error => {
+       console.log(error)
+     })
+   }
  }
 }
 </script>
