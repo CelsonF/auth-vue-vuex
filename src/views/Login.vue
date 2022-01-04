@@ -2,51 +2,53 @@
   <div class="container">
     <h1 class="my-3">Login</h1>
     <form @submit.prevent="efetuarLogin">
-       <div class="form-group">
-          <label for="email">E-mail</label
-          ><input type="text" name="email" id="email" class="form-control" v-model="usuario.email"/>
-        </div>
-       <div class="form-group">
-          <label for="senha">Senha</label
-          ><input type="password" name="senha" id="senha" class="form-control" v-model="usuario.senha"/>
-        </div>
-        <div class="form-group d-flex align-items-center justify-content-between">
-          <button type="submit" class="btn btn-primary">Logar</button>
-          <router-link :to="{name:'novo.usuario'}">
-             Não possui um cadastro, cadastre-se aqui!
-          </router-link>
-        </div>
+      <div class="form-group">
+        <label for="email">E-mail</label
+        ><input
+          type="text"
+          name="email"
+          id="email"
+          class="form-control"
+          v-model="usuario.email"
+        />
+      </div>
+      <div class="form-group">
+        <label for="senha">Senha</label
+        ><input
+          type="password"
+          name="senha"
+          id="senha"
+          class="form-control"
+          v-model="usuario.senha"
+        />
+      </div>
+      <div class="form-group d-flex align-items-center justify-content-between">
+        <button type="submit" class="btn btn-primary">Logar</button>
+        <router-link :to="{ name: 'novo.usuario' }">
+          Não possui um cadastro, cadastre-se aqui!
+        </router-link>
+      </div>
     </form>
   </div>
 </template>
 
 <script>
-
-export default {  
- data() {
-     return {
-         usuario:{
-             email:'',
-             senha:''
-         }
-     }
- },
- methods: {
-   efetuarLogin() {
-      this.$http.post('auth/login',this.usuario)
-     .then(response => {
-       console.log(response)
-       localStorage.setItem('token',response.data.access_token)
-       this.$router.push({name:'gerentes'})
-     })
-     .catch(error => {
-       console.log(error)
-     })
-   }
- }
-}
+export default {
+  data() {
+    return {
+      usuario: {
+        email: "",
+        senha: "",
+      },
+    };
+  },
+  methods: {
+    efetuarLogin() {
+      this.$store.dispatch("efetuarLogin", this.usuario)
+        .then(() => this.$router.push({ name: "gerentes" }))
+    },
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
