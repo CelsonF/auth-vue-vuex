@@ -1,6 +1,6 @@
 import http from '../http'
 
-const action = {
+const actions = {
     efetuarLogin({commit},usuario) {
         return new Promise((resolve,reject) => {
             http.post('auth/login',usuario)
@@ -19,4 +19,4 @@ const action = {
     }
 }
 
-export default action;
+export default actions;

@@ -22,6 +22,7 @@
           v-model="usuario.senha"
         />
       </div>
+      <p class="alert alert-danger" v-if="mensagemErro">{{mensagemErro}}</p>
       <div class="form-group d-flex align-items-center justify-content-between">
         <button type="submit" class="btn btn-primary">Logar</button>
         <router-link :to="{ name: 'novo.usuario' }">
@@ -40,12 +41,22 @@ export default {
         email: "",
         senha: "",
       },
+      mensagemErro:''
     };
   },
   methods: {
     efetuarLogin() {
-      this.$store.dispatch("efetuarLogin", this.usuario)
-        .then(() => this.$router.push({ name: "gerentes" }))
+      this.$store
+        .dispatch("efetuarLogin", this.usuario)
+        .then(() => {
+          this.$router.push({ name: "gerentes" })
+          this.mensagemErro = "";
+        })
+        .catch(erro => {
+          if(erro.request.status == 401) {
+            this.mensagemErro = "Login ou senha inválido(s)";
+          }
+        });
     },
   },
 };
